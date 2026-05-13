@@ -102,8 +102,12 @@ private final class InterceptorView: NSView {
             return event
         }
 
-        let selector = #selector(NSStandardKeyBindingResponding.insertLineBreak(_:))
-        let handled = NSApp.sendAction(selector, to: nil, from: nil)
-        return handled ? nil : event
+        guard let textView = window?.firstResponder as? NSTextView else {
+            return event
+        }
+
+        let selector = #selector(NSStandardKeyBindingResponding.insertNewlineIgnoringFieldEditor(_:))
+        textView.doCommand(by: selector)
+        return nil
     }
 }
