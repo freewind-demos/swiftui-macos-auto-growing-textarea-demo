@@ -10,18 +10,14 @@
 		325761000DCD8C57EBEA68E1 /* AppMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890E244FF2CDA600BF0D1B80 /* AppMain.swift */; };
 		6458C906AAF34E11FE016A13 /* AutoGrowingTextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC48B2D9978A74D7E0542B /* AutoGrowingTextArea.swift */; };
 		7C27AECF479BF161528FCC6B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC86627E8E2C9D8B613DB82 /* ContentView.swift */; };
-		B300CEA9F9D56AEDFE8941FA /* measureTextLayoutMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F445FE2619E781F8B0A94 /* measureTextLayoutMetrics.swift */; };
-		C16420E32B6A3B237ED78614 /* TextLayoutMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749F70F6A3513AD0F6C9F96A /* TextLayoutMetrics.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0DC86627E8E2C9D8B613DB82 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1114E069834E07A0F3675F05 /* SwiftUIAutoGrowingTextAreaDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIAutoGrowingTextAreaDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		749F70F6A3513AD0F6C9F96A /* TextLayoutMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLayoutMetrics.swift; sourceTree = "<group>"; };
 		7E158403CA8C820D5D701D0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		890E244FF2CDA600BF0D1B80 /* AppMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMain.swift; sourceTree = "<group>"; };
 		9DCC48B2D9978A74D7E0542B /* AutoGrowingTextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoGrowingTextArea.swift; sourceTree = "<group>"; };
-		E49F445FE2619E781F8B0A94 /* measureTextLayoutMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = measureTextLayoutMetrics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -40,8 +36,6 @@
 				9DCC48B2D9978A74D7E0542B /* AutoGrowingTextArea.swift */,
 				0DC86627E8E2C9D8B613DB82 /* ContentView.swift */,
 				7E158403CA8C820D5D701D0E /* Info.plist */,
-				E49F445FE2619E781F8B0A94 /* measureTextLayoutMetrics.swift */,
-				749F70F6A3513AD0F6C9F96A /* TextLayoutMetrics.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -116,8 +110,6 @@
 				325761000DCD8C57EBEA68E1 /* AppMain.swift in Sources */,
 				6458C906AAF34E11FE016A13 /* AutoGrowingTextArea.swift in Sources */,
 				7C27AECF479BF161528FCC6B /* ContentView.swift in Sources */,
-				C16420E32B6A3B237ED78614 /* TextLayoutMetrics.swift in Sources */,
-				B300CEA9F9D56AEDFE8941FA /* measureTextLayoutMetrics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
