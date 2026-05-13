@@ -1,4 +1,4 @@
-name: SwiftUITextEditorDemo
+name: SwiftUIAutoGrowingTextAreaDemo
 options:
   bundleIdPrefix: com.freewind
   deploymentTarget:
@@ -8,14 +8,14 @@ settings:
     SWIFT_VERSION: "5.9"
     MACOSX_DEPLOYMENT_TARGET: "14.0"
 targets:
-  SwiftUITextEditorDemo:
+  SwiftUIAutoGrowingTextAreaDemo:
     type: application
     platform: macOS
     sources:
       - Sources
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.freewind.SwiftUITextEditorDemo
+        PRODUCT_BUNDLE_IDENTIFIER: com.freewind.SwiftUIAutoGrowingTextAreaDemo
         INFOPLIST_FILE: Sources/Info.plist
         CODE_SIGN_IDENTITY: "-"
         CODE_SIGN_STYLE: Manual

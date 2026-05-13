@@ -1,32 +1,33 @@
 #!/usr/bin/env bash
-# 命令行构建：默认 Debug；传 release 则 Release 并输出到 dist/
-# 依赖：Xcode、XcodeGen（brew install xcodegen）
+
 set -euo pipefail
+
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-export DEVELOPER_DIR="${DEVELOPER_DIR:-/Applications/Xcode.app/Contents/Developer}"
+export DEVELOPER_DIR="${DEVELOPER_DIR:-/System/Volumes/Data/Applications/Xcode.app/Contents/Developer}"
+
 cd "$ROOT"
 
-PROJ_NAME=$(grep -E '^name:[[:space:]]' project.yml | head -1 | awk '{print $2}')
+PROJ_NAME="$(rtk yq -r '.name' project.yml)"
 if [[ -z "${PROJ_NAME}" ]]; then
   echo "error: could not read name from project.yml" >&2
   exit 1
 fi
 
-MODE=$(echo "${1:-debug}" | tr '[:upper:]' '[:lower:]')
-xcodegen generate
+MODE="$(printf '%s' "${1:-debug}" | tr '[:upper:]' '[:lower:]')"
+rtk xcodegen generate
 
 if [[ "$MODE" == "release" ]]; then
   CONFIG=Release
   DERIVED="${ROOT}/build/ReleaseDerivedData"
-  rm -rf "${ROOT}/dist" "$DERIVED"
-  mkdir -p "${ROOT}/dist"
+  rtk rm -rf "${ROOT}/dist" "$DERIVED"
+  rtk mkdir -p "${ROOT}/dist"
 else
   CONFIG=Debug
   DERIVED="${ROOT}/build/DerivedData"
-  rm -rf "$DERIVED"
+  rtk rm -rf "$DERIVED"
 fi
 
-xcodebuild -project "${PROJ_NAME}.xcodeproj" \
+rtk xcodebuild -project "${PROJ_NAME}.xcodeproj" \
   -scheme "${PROJ_NAME}" \
   -configuration "${CONFIG}" \
   -derivedDataPath "${DERIVED}" \
@@ -35,7 +36,7 @@ xcodebuild -project "${PROJ_NAME}.xcodeproj" \
   build
 
 if [[ "$MODE" == "release" ]]; then
-  ditto "${DERIVED}/Build/Products/Release/${PROJ_NAME}.app" "${ROOT}/dist/${PROJ_NAME}.app"
+  rtk ditto "${DERIVED}/Build/Products/Release/${PROJ_NAME}.app" "${ROOT}/dist/${PROJ_NAME}.app"
   echo "Release app: ${ROOT}/dist/${PROJ_NAME}.app"
 else
   echo "Debug app: ${DERIVED}/Build/Products/Debug/${PROJ_NAME}.app"

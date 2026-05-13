@@ -1,11 +1,11 @@
 import SwiftUI
 
 @main
-struct TextEditorApp: App {
+struct AutoGrowingTextAreaApp: App {
     var body: some Scene {
-        Window("Editor", id: "main") {
+        Window("Auto Growing Text Area", id: "main") {
             ContentView()
         }
-        .defaultSize(width: 500, height: 400)
+        .defaultSize(width: 640, height: 480)
     }
 }

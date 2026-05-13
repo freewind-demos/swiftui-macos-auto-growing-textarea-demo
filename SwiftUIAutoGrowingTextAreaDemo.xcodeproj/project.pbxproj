@@ -7,131 +7,124 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1564EAB79AF5630409F4B419 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6267FC1E5968149EB3EB32 /* ContentView.swift */; };
-		CB0589B7A8660AAA093FBCCB /* AppMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A672913BDDCE8F79B9D8E6 /* AppMain.swift */; };
+		325761000DCD8C57EBEA68E1 /* AppMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890E244FF2CDA600BF0D1B80 /* AppMain.swift */; };
+		6458C906AAF34E11FE016A13 /* AutoGrowingTextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC48B2D9978A74D7E0542B /* AutoGrowingTextArea.swift */; };
+		7C27AECF479BF161528FCC6B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC86627E8E2C9D8B613DB82 /* ContentView.swift */; };
+		B300CEA9F9D56AEDFE8941FA /* measureTextLayoutMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F445FE2619E781F8B0A94 /* measureTextLayoutMetrics.swift */; };
+		C16420E32B6A3B237ED78614 /* TextLayoutMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749F70F6A3513AD0F6C9F96A /* TextLayoutMetrics.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		56A672913BDDCE8F79B9D8E6 /* AppMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMain.swift; sourceTree = "<group>"; };
-		A489ECE8EA3C05671A054E7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		B0D6872348FC19F8D76D1C61 /* SwiftUITextEditorDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUITextEditorDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CF6267FC1E5968149EB3EB32 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0DC86627E8E2C9D8B613DB82 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		1114E069834E07A0F3675F05 /* SwiftUIAutoGrowingTextAreaDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIAutoGrowingTextAreaDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		749F70F6A3513AD0F6C9F96A /* TextLayoutMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLayoutMetrics.swift; sourceTree = "<group>"; };
+		7E158403CA8C820D5D701D0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		890E244FF2CDA600BF0D1B80 /* AppMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMain.swift; sourceTree = "<group>"; };
+		9DCC48B2D9978A74D7E0542B /* AutoGrowingTextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoGrowingTextArea.swift; sourceTree = "<group>"; };
+		E49F445FE2619E781F8B0A94 /* measureTextLayoutMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = measureTextLayoutMetrics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
-		2AED823A9741312DBFB2C58C /* Products */ = {
+		319693E6D11AB93F4FD7E7DC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B0D6872348FC19F8D76D1C61 /* SwiftUITextEditorDemo.app */,
+				1114E069834E07A0F3675F05 /* SwiftUIAutoGrowingTextAreaDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6ED50210532543A58704F3ED /* Sources */ = {
+		85296759051E1FAF82A2569C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				56A672913BDDCE8F79B9D8E6 /* AppMain.swift */,
-				CF6267FC1E5968149EB3EB32 /* ContentView.swift */,
-				A489ECE8EA3C05671A054E7F /* Info.plist */,
+				890E244FF2CDA600BF0D1B80 /* AppMain.swift */,
+				9DCC48B2D9978A74D7E0542B /* AutoGrowingTextArea.swift */,
+				0DC86627E8E2C9D8B613DB82 /* ContentView.swift */,
+				7E158403CA8C820D5D701D0E /* Info.plist */,
+				E49F445FE2619E781F8B0A94 /* measureTextLayoutMetrics.swift */,
+				749F70F6A3513AD0F6C9F96A /* TextLayoutMetrics.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		778895E4D00CAD9C0BCAE36D = {
+		B3206EAF9B33E75C05C6ECBD = {
 			isa = PBXGroup;
 			children = (
-				6ED50210532543A58704F3ED /* Sources */,
-				2AED823A9741312DBFB2C58C /* Products */,
+				85296759051E1FAF82A2569C /* Sources */,
+				319693E6D11AB93F4FD7E7DC /* Products */,
 			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CF789F6BAEB1853A041F77DA /* SwiftUITextEditorDemo */ = {
+		0DDF07D64AAC7D82BCFBAB8C /* SwiftUIAutoGrowingTextAreaDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9DABB7263D0DD7D0C0E3E2A5 /* Build configuration list for PBXNativeTarget "SwiftUITextEditorDemo" */;
+			buildConfigurationList = 568DCF119AE024CBB88D4125 /* Build configuration list for PBXNativeTarget "SwiftUIAutoGrowingTextAreaDemo" */;
 			buildPhases = (
-				2CC20B5DA1D87C861B128A26 /* Sources */,
+				6292C8CC7D548A0C9E14793D /* Sources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = SwiftUITextEditorDemo;
+			name = SwiftUIAutoGrowingTextAreaDemo;
 			packageProductDependencies = (
 			);
-			productName = SwiftUITextEditorDemo;
-			productReference = B0D6872348FC19F8D76D1C61 /* SwiftUITextEditorDemo.app */;
+			productName = SwiftUIAutoGrowingTextAreaDemo;
+			productReference = 1114E069834E07A0F3675F05 /* SwiftUIAutoGrowingTextAreaDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		32EA532C210975305A1ADF4F /* Project object */ = {
+		7E8B6EA6D946A337EF24F824 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
-					CF789F6BAEB1853A041F77DA = {
+					0DDF07D64AAC7D82BCFBAB8C = {
 						DevelopmentTeam = "";
 						ProvisioningStyle = Manual;
 					};
 				};
 			};
-			buildConfigurationList = 9F2946B385D57015D6495CF2 /* Build configuration list for PBXProject "SwiftUITextEditorDemo" */;
+			buildConfigurationList = E33DBE22B29B0FA802BE5DD9 /* Build configuration list for PBXProject "SwiftUIAutoGrowingTextAreaDemo" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
 				en,
 			);
-			mainGroup = 778895E4D00CAD9C0BCAE36D;
+			mainGroup = B3206EAF9B33E75C05C6ECBD;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 2AED823A9741312DBFB2C58C /* Products */;
+			productRefGroup = 319693E6D11AB93F4FD7E7DC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CF789F6BAEB1853A041F77DA /* SwiftUITextEditorDemo */,
+				0DDF07D64AAC7D82BCFBAB8C /* SwiftUIAutoGrowingTextAreaDemo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		2CC20B5DA1D87C861B128A26 /* Sources */ = {
+		6292C8CC7D548A0C9E14793D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB0589B7A8660AAA093FBCCB /* AppMain.swift in Sources */,
-				1564EAB79AF5630409F4B419 /* ContentView.swift in Sources */,
+				325761000DCD8C57EBEA68E1 /* AppMain.swift in Sources */,
+				6458C906AAF34E11FE016A13 /* AutoGrowingTextArea.swift in Sources */,
+				7C27AECF479BF161528FCC6B /* ContentView.swift in Sources */,
+				C16420E32B6A3B237ED78614 /* TextLayoutMetrics.swift in Sources */,
+				B300CEA9F9D56AEDFE8941FA /* measureTextLayoutMetrics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		328F6FA0B342CE82E5E684C0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = NO;
-				INFOPLIST_FILE = Sources/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.freewind.SwiftUITextEditorDemo;
-				SDKROOT = macosx;
-			};
-			name = Release;
-		};
-		3F75C58067964B6651F9FB01 /* Debug */ = {
+		01F8B2D5C9E7E8E958A0356A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -194,7 +187,7 @@
 			};
 			name = Debug;
 		};
-		67BBA77AF6F99D4B173AB2A8 /* Release */ = {
+		30EC88703D0E901D04DAE469 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -250,7 +243,7 @@
 			};
 			name = Release;
 		};
-		6E6BE5C3F2723851D264F69B /* Debug */ = {
+		645407B0242A4BA9C5E58EB0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -264,7 +257,26 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.freewind.SwiftUITextEditorDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.freewind.SwiftUIAutoGrowingTextAreaDemo;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		81BEB91FF0F693C56E00CA15 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				INFOPLIST_FILE = Sources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.freewind.SwiftUIAutoGrowingTextAreaDemo;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -272,25 +284,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9DABB7263D0DD7D0C0E3E2A5 /* Build configuration list for PBXNativeTarget "SwiftUITextEditorDemo" */ = {
+		568DCF119AE024CBB88D4125 /* Build configuration list for PBXNativeTarget "SwiftUIAutoGrowingTextAreaDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6E6BE5C3F2723851D264F69B /* Debug */,
-				328F6FA0B342CE82E5E684C0 /* Release */,
+				81BEB91FF0F693C56E00CA15 /* Debug */,
+				645407B0242A4BA9C5E58EB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		9F2946B385D57015D6495CF2 /* Build configuration list for PBXProject "SwiftUITextEditorDemo" */ = {
+		E33DBE22B29B0FA802BE5DD9 /* Build configuration list for PBXProject "SwiftUIAutoGrowingTextAreaDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3F75C58067964B6651F9FB01 /* Debug */,
-				67BBA77AF6F99D4B173AB2A8 /* Release */,
+				01F8B2D5C9E7E8E958A0356A /* Debug */,
+				30EC88703D0E901D04DAE469 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 32EA532C210975305A1ADF4F /* Project object */;
+	rootObject = 7E8B6EA6D946A337EF24F824 /* Project object */;
 }
