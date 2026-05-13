@@ -15,47 +15,6 @@ struct TextLayoutMetrics: Equatable {
     }
 }
 
-// 全局独立 helper：
-// 只负责“文本 + 宽度 + 字体 -> 视觉行数 + 单行高”。
-// 它不依赖具体 View，也不碰 SwiftUI state。
-func measureTextLayoutMetrics(text: String, width: CGFloat, font: NSFont) -> TextLayoutMetrics {
-    let textStorage = NSTextStorage(string: text)
-    let layoutManager = NSLayoutManager()
-    let textContainer = NSTextContainer(
-        containerSize: NSSize(
-            width: width,
-            height: CGFloat.greatestFiniteMagnitude
-        )
-    )
-
-    textContainer.widthTracksTextView = false
-    textContainer.heightTracksTextView = false
-    textContainer.lineFragmentPadding = 0
-
-    textStorage.addLayoutManager(layoutManager)
-    layoutManager.addTextContainer(textContainer)
-    layoutManager.ensureLayout(for: textContainer)
-
-    let lineHeight = ceil(layoutManager.defaultLineHeight(for: font))
-    var lineCount = 0
-    let glyphRange = layoutManager.glyphRange(for: textContainer)
-
-    layoutManager.enumerateLineFragments(forGlyphRange: glyphRange) { _, _, _, _, _ in
-        lineCount += 1
-    }
-
-    // 文本以换行结尾时，AppKit 会额外留一条空白行，要把它也算进去。
-    if layoutManager.extraLineFragmentTextContainer != nil,
-       !layoutManager.extraLineFragmentRect.isEmpty {
-        lineCount += 1
-    }
-
-    return TextLayoutMetrics(
-        lineCount: max(1, lineCount),
-        singleLineHeight: lineHeight
-    )
-}
-
 struct ContentView: View {
     // `@State` = 这个 View 自己持有的状态。这里存“文本内容”。
     @State private var text = """
@@ -171,9 +130,19 @@ struct AutoGrowingTextArea: NSViewRepresentable {
 
         textView.textContainerInset = .zero
         scrollView.documentView = textView
+        let initialMetrics = measureTextLayoutMetrics(
+            text: textView.string,
+            width: width,
+            font: textView.font ?? .systemFont(ofSize: NSFont.systemFontSize)
+        )
+        context.coordinator.applyTextViewFrame(
+            for: textView,
+            width: width,
+            metrics: initialMetrics
+        )
 
-        // 第一次显示前先测一次高度，避免初始 frame 不准。
-        context.coordinator.recalculateLayoutMetrics(for: textView, width: width)
+        // 第一次显示前先把真实 metrics 回给 SwiftUI，避免首帧状态不准。
+        context.coordinator.pushMetricsIfNeeded(initialMetrics, async: true)
         return scrollView
     }
 
@@ -186,11 +155,43 @@ struct AutoGrowingTextArea: NSViewRepresentable {
         if textView.string != text {
             // 如果父 View 的 `text` 已变，推回 NSTextView。
             textView.string = text
+            let nextMetrics = measureTextLayoutMetrics(
+                text: textView.string,
+                width: width,
+                font: textView.font ?? .systemFont(ofSize: NSFont.systemFontSize)
+            )
+            context.coordinator.applyTextViewFrame(
+                for: textView,
+                width: width,
+                metrics: nextMetrics
+            )
+            context.coordinator.pushMetricsIfNeeded(nextMetrics, async: true)
+            return
         }
 
         // 宽度可能变了，比如窗口拉伸。
         // 同一段文本在不同宽度下换行数不同，所以要重算高度。
-        context.coordinator.recalculateLayoutMetrics(for: textView, width: width)
+        let widthChanged = abs(textView.frame.width - width) > 0.5
+        if widthChanged {
+            let nextMetrics = measureTextLayoutMetrics(
+                text: textView.string,
+                width: width,
+                font: textView.font ?? .systemFont(ofSize: NSFont.systemFontSize)
+            )
+            context.coordinator.applyTextViewFrame(
+                for: textView,
+                width: width,
+                metrics: nextMetrics
+            )
+            context.coordinator.pushMetricsIfNeeded(nextMetrics, async: true)
+            return
+        }
+
+        context.coordinator.applyTextViewFrame(
+            for: textView,
+            width: width,
+            metrics: metrics
+        )
     }
 
     final class Coordinator: NSObject, NSTextViewDelegate {
@@ -204,6 +205,33 @@ struct AutoGrowingTextArea: NSViewRepresentable {
             self.metrics = metrics
         }
 
+        func applyTextViewFrame(
+            for textView: NSTextView,
+            width: CGFloat,
+            metrics: TextLayoutMetrics
+        ) {
+            let targetSize = NSSize(width: width, height: metrics.contentHeight)
+            guard textView.frame.size != targetSize else {
+                return
+            }
+
+            textView.frame.size = targetSize
+        }
+
+        func pushMetricsIfNeeded(_ nextMetrics: TextLayoutMetrics, async: Bool) {
+            guard metrics.wrappedValue != nextMetrics else {
+                return
+            }
+
+            if async {
+                DispatchQueue.main.async {
+                    self.metrics.wrappedValue = nextMetrics
+                }
+            } else {
+                self.metrics.wrappedValue = nextMetrics
+            }
+        }
+
         func textDidChange(_ notification: Notification) {
             // 这是“用户在 NSTextView 里敲字后”的入口。
             guard let textView = notification.object as? NSTextView else {
@@ -215,44 +243,15 @@ struct AutoGrowingTextArea: NSViewRepresentable {
                 text.wrappedValue = textView.string
             }
 
-            // 第 2 步：文本已变，行数可能变，马上重算高度。
-            recalculateLayoutMetrics(for: textView, width: textView.bounds.width)
-        }
-
-        func recalculateLayoutMetrics(for textView: NSTextView, width: CGFloat) {
-            // 这里是“排版指标计算核心”。
-            // 输入：当前文本 + 当前宽度。
-            // 输出：nextMetrics，并在最后写回 `metrics` Binding。
-            guard width > 0 else {
-                return
-            }
-
-            let font = textView.font ?? .systemFont(ofSize: NSFont.systemFontSize)
-            // 现在外层只看得见一个简单规则：
-            // “给我文本和宽度，我返回视觉行数与单行高”。
-                let nextMetrics = measureTextLayoutMetrics(
+            let nextMetrics = measureTextLayoutMetrics(
                 text: textView.string,
-                width: width,
-                font: font
+                width: textView.bounds.width,
+                font: textView.font ?? .systemFont(ofSize: NSFont.systemFontSize)
             )
 
-            // 底层 NSTextView 仍要拿一个真实高度，不然文档视图不会跟着长高。
-            textView.frame.size = NSSize(width: width, height: nextMetrics.contentHeight)
-
-            guard metrics.wrappedValue != nextMetrics else {
-                return
-            }
-
-            // 异步回写，避开 AppKit layout 周期内直接改 SwiftUI state 的更新警告。
-            DispatchQueue.main.async {
-                // 关键回写点：
-                // 1. 把算出的 `lineCount + singleLineHeight` 写进父 View 的 `editorMetrics`
-                // 2. SwiftUI 发现状态变了
-                // 3. 父 View 自己算 `editorHeight`
-                // 4. `AutoGrowingTextArea(...).frame(height: editorHeight)` 重新执行
-                // 5. 组件视觉高度随之更新
-                self.metrics.wrappedValue = nextMetrics
-            }
+            // 输入路径直接同步回写 metrics，让外层 frame 尽快跟上。
+            // 不在这里直接改 textView.frame，避免“内层先跳、外层后跳”的闪动。
+            pushMetricsIfNeeded(nextMetrics, async: false)
         }
     }
 }
