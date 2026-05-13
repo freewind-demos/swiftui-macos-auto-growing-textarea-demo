@@ -29,24 +29,81 @@ struct AutoGrowingTextArea: View {
         .font(font)
         .lineLimit(lineLimit)
         .focused($isFocused)
-        .overlay {
-            Button(action: insertNewline) {
-                EmptyView()
-            }
-            .keyboardShortcut(.return, modifiers: [])
-            .buttonStyle(.plain)
-            .disabled(!isFocused)
-            .opacity(0.001)
-            .frame(width: 1, height: 1)
-            .accessibilityHidden(true)
+        .background {
+            ReturnKeyInterceptor(isEnabled: isFocused)
+                .frame(width: 0, height: 0)
         }
     }
+}
 
-    private func insertNewline() {
-        guard isFocused else {
+private struct ReturnKeyInterceptor: NSViewRepresentable {
+    let isEnabled: Bool
+
+    func makeNSView(context: Context) -> InterceptorView {
+        let view = InterceptorView()
+        view.isEnabled = isEnabled
+        return view
+    }
+
+    func updateNSView(_ nsView: InterceptorView, context: Context) {
+        nsView.isEnabled = isEnabled
+    }
+}
+
+private final class InterceptorView: NSView {
+    var isEnabled = false
+    private var monitor: Any?
+
+    override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+
+        if window == nil {
+            removeMonitor()
             return
         }
 
-        text.append("\n")
+        installMonitorIfNeeded()
+    }
+
+    deinit {
+        removeMonitor()
+    }
+
+    private func installMonitorIfNeeded() {
+        guard monitor == nil else {
+            return
+        }
+
+        monitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
+            guard let self else {
+                return event
+            }
+
+            return self.handle(event)
+        }
+    }
+
+    private func removeMonitor() {
+        guard let monitor else {
+            return
+        }
+
+        NSEvent.removeMonitor(monitor)
+        self.monitor = nil
+    }
+
+    private func handle(_ event: NSEvent) -> NSEvent? {
+        guard isEnabled else {
+            return event
+        }
+
+        let modifiers = event.modifierFlags.intersection([.shift, .control, .option, .command])
+        guard event.keyCode == 36, modifiers.isEmpty else {
+            return event
+        }
+
+        let selector = #selector(NSStandardKeyBindingResponding.insertLineBreak(_:))
+        let handled = NSApp.sendAction(selector, to: nil, from: nil)
+        return handled ? nil : event
     }
 }

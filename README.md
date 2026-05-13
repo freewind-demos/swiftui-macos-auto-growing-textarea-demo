@@ -9,7 +9,7 @@
 3. 不裁剪文本。
 4. 不保留多余底部空行。
 
-核心做法不是自己桥接 `NSTextView`，而是直接使用 SwiftUI 原生 `TextField(axis: .vertical)`，再放一个透明隐藏 `Button`，把 `Return` 快捷键改成插入换行。
+核心做法不是自己桥接 `NSTextView`，而是直接使用 SwiftUI 原生 `TextField(axis: .vertical)`，再用本地 `keyDown` 监听，把 plain `Return` 转发成 AppKit 的 `insertLineBreak:`。
 
 ## 快速开始
 
@@ -36,13 +36,8 @@ TextField("请输入内容", text: $text, axis: .vertical)
     .textFieldStyle(.plain)
     .lineLimit(1...12)
     .focused($isFocused)
-    .overlay {
-        Button(action: insertNewline) {
-            EmptyView()
-        }
-        .keyboardShortcut(.return, modifiers: [])
-        .disabled(!isFocused)
-        .opacity(0.001)
+    .background {
+        ReturnKeyInterceptor(isEnabled: isFocused)
     }
 ```
 
@@ -50,4 +45,4 @@ TextField("请输入内容", text: $text, axis: .vertical)
 
 1. 好处：代码极短，纯 SwiftUI，可直接拷。
 2. 好处：不再需要 `NSViewRepresentable`、`Coordinator`、手动测量高度。
-3. 代价：当前回车是追加到文本末尾，不是精确插入到光标当前位置。
+3. 好处：这次不是末尾追加 `\n`，而是走 AppKit 文本系统自己的换行 action。
