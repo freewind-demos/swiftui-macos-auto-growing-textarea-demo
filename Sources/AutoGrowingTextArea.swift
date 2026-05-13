@@ -5,6 +5,7 @@ struct AutoGrowingTextArea: View {
     private let prompt: LocalizedStringKey
     private let lineLimit: ClosedRange<Int>
     private let font: Font
+    @FocusState private var isFocused: Bool
 
     init(
         text: Binding<String>,
@@ -27,5 +28,25 @@ struct AutoGrowingTextArea: View {
         .textFieldStyle(.plain)
         .font(font)
         .lineLimit(lineLimit)
+        .focused($isFocused)
+        .overlay {
+            Button(action: insertNewline) {
+                EmptyView()
+            }
+            .keyboardShortcut(.return, modifiers: [])
+            .buttonStyle(.plain)
+            .disabled(!isFocused)
+            .opacity(0.001)
+            .frame(width: 1, height: 1)
+            .accessibilityHidden(true)
+        }
+    }
+
+    private func insertNewline() {
+        guard isFocused else {
+            return
+        }
+
+        text.append("\n")
     }
 }

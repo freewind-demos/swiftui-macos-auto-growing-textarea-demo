@@ -11,7 +11,7 @@ struct ContentView: View {
             Text("Auto-growing text area")
                 .font(.title2)
 
-            Text("底层直接用 TextField(axis: .vertical)。")
+            Text("底层用 TextField(axis: .vertical) + 隐藏 Return 按钮。")
                 .foregroundStyle(.secondary)
 
             AutoGrowingTextArea(
