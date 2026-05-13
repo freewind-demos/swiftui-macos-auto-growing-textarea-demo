@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    private let editorFont = NSFont.systemFont(ofSize: NSFont.systemFontSize)
-
     @State private var text = """
 第一行
 第二行会随内容继续增长，不会出现内部滚动条。
@@ -13,12 +11,14 @@ struct ContentView: View {
             Text("Auto-growing text area")
                 .font(.title2)
 
-            Text("外部只传 text binding；宽度与高度内部自处理。")
+            Text("底层直接用 TextField(axis: .vertical)。")
                 .foregroundStyle(.secondary)
 
             AutoGrowingTextArea(
                 text: $text,
-                font: editorFont
+                prompt: "请输入多行内容",
+                lineLimit: 1...16,
+                font: .body
             )
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(12)

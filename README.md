@@ -9,7 +9,7 @@
 3. 不裁剪文本。
 4. 不保留多余底部空行。
 
-核心做法不是直接用 `TextEditor`，而是用 1 个可拷走即用的 `AutoGrowingTextArea` 包装 `NSTextView`，把桥接与测量细节都藏进内部。
+核心做法不是自己桥接 `NSTextView`，而是直接使用 SwiftUI 原生 `TextField(axis: .vertical)`。
 
 ## 快速开始
 
@@ -22,25 +22,23 @@ open build/DerivedData/Build/Products/Debug/SwiftUIAutoGrowingTextAreaDemo.app
 ## 用法
 
 ```swift
-AutoGrowingTextArea(text: $text)
+AutoGrowingTextArea(
+    text: $text,
+    prompt: "请输入多行内容",
+    lineLimit: 1...16
+)
 ```
 
 ## 核心点
 
 ```swift
-textContainer.lineFragmentPadding = 0
-textView.textContainerInset = .zero
+TextField("请输入内容", text: $text, axis: .vertical)
+    .textFieldStyle(.plain)
+    .lineLimit(1...12)
 ```
 
-这 2 处分别解决：
+这版取舍：
 
-1. 行内左右额外 padding。
-2. 上下额外 inset。
-
-高度计算仍靠：
-
-```swift
-layoutManager.usedRect(for: textContainer).height
-```
-
-拿到实际排版后的内容高度，再由组件内部回写自己的 `frame(height:)`。
+1. 好处：代码极短，纯 SwiftUI，可直接拷。
+2. 好处：不再需要 `NSViewRepresentable`、`Coordinator`、手动测量高度。
+3. 代价：行为完全交给 SwiftUI 原生实现，精细控制不如自定义 `NSTextView`。
