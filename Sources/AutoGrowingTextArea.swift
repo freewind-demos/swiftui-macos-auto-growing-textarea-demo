@@ -106,7 +106,7 @@ private final class InterceptorView: NSView {
             return event
         }
 
-        let selector = #selector(NSStandardKeyBindingResponding.insertNewlineIgnoringFieldEditor(_:))
+        let selector = #selector(NSStandardKeyBindingResponding.insertLineBreak(_:))
         textView.doCommand(by: selector)
         return nil
     }
